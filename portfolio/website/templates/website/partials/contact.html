@@ -1,0 +1,114 @@
+<section id="contact" class="py-20 bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 animate__animated animate__fadeIn">Get In Touch</h2>
+        <div class="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+            <div class="md:flex">
+                <!-- Contact Info -->
+                <div class="md:w-1/2 bg-gradient-to-br from-green-600 to-green-800 dark:from-green-700 dark:to-green-900 text-white p-8">
+                    <h3 class="text-2xl font-bold mb-4 animate__animated animate__fadeIn">Contact Information</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-start animate__animated animate__fadeIn animate__delay-1s">
+                            <i class="fas fa-envelope mt-1 mr-4 text-xl" aria-hidden="true"></i>
+                            <div>
+                                <h4 class="font-medium">Email</h4>
+                                <p class="text-green-100 dark:text-green-200">
+                                    <a href="mailto:mulangarichard1000@gmail.com" class="hover:text-green-300 transition-colors">mulangarichard1000@gmail.com</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-start animate__animated animate__fadeIn animate__delay-2s">
+                            <i class="fas fa-phone-alt mt-1 mr-4 text-xl" aria-hidden="true"></i>
+                            <div>
+                                <h4 class="font-medium">Phone/WhatsApp</h4>
+                                <p class="text-green-100 dark:text-green-200">
+                                    <a href="tel:+260973546375" class="hover:text-green-300 transition-colors">+260 973546375</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-start animate__animated animate__fadeIn animate__delay-3s">
+                            <i class="fas fa-map-marker-alt mt-1 mr-4 text-xl" aria-hidden="true"></i>
+                            <div>
+                                <h4 class="font-medium">Location</h4>
+                                <p class="text-green-100 dark:text-green-200">Lusaka, Zambia</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-8 animate__animated animate__fadeIn animate__delay-4s">
+                        <h4 class="font-medium mb-4">Follow Me</h4>
+                        <div class="flex space-x-4">
+                            <a href="https://linkedin.com/in/richman-mushanga-688913309" class="text-2xl hover:text-green-300 transition-colors transform hover:scale-110" target="_blank" aria-label="LinkedIn">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="https://facebook.com/richard" class="text-2xl hover:text-green-300 transition-colors transform hover:scale-110" target="_blank" aria-label="Facebook">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                            <a href="https://wa.me/+260973546375" class="text-2xl hover:text-green-300 transition-colors transform hover:scale-110" target="_blank" aria-label="WhatsApp">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Contact Form -->
+                <div class="md:w-1/2 p-8">
+                    <form method="post" class="space-y-6">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="relative">
+                                <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    {{ field.label }}
+                                    {% if field.field.required %}
+                                        <span class="text-red-500" aria-hidden="true">*</span>
+                                    {% endif %}
+                                </label>
+                                {{ field }}
+                                {% if field.errors %}
+                                    <p class="mt-1 text-sm text-red-600 dark:text-red-400" id="error-{{ field.id_for_label }}">
+                                        {{ field.errors.0 }}
+                                    </p>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        <button type="submit" 
+                                class="w-full bg-gradient-to-r from-green-600 to-green-800 dark:from-green-700 dark:to-green-900 text-white px-6 py-3 rounded-lg font-semibold hover:from-green-700 hover:to-green-900 dark:hover:from-green-800 dark:hover:to-green-950 transition-all duration-300 transform hover:scale-105 animate__animated animate__fadeIn animate__delay-1s">
+                            Send Message <i class="fas fa-paper-plane ml-2"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Style form inputs for consistency */
+    input, textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #d1d5db; /* gray-300 */
+        border-radius: 0.375rem;
+        background-color: #f9fafb; /* gray-50 */
+        color: #1f2937; /* gray-900 */
+        transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+    input:focus, textarea:focus {
+        outline: none;
+        border-color: #2f855a; /* green-600 */
+        box-shadow: 0 0 0 3px rgba(47, 133, 90, 0.2); /* green-600/20 */
+    }
+    .dark input, .dark textarea {
+        border-color: #4b5563; /* gray-600 */
+        background-color: #374151; /* gray-700 */
+        color: #f3f4f6; /* gray-100 */
+    }
+    .dark input:focus, .dark textarea:focus {
+        border-color: #34d399; /* green-400 */
+        box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.2); /* green-400/20 */
+    }
+    /* Error state for inputs */
+    input.error, textarea.error {
+        border-color: #ef4444; /* red-500 */
+    }
+    .dark input.error, .dark textarea.error {
+        border-color: #f87171; /* red-400 */
+    }
+</style>

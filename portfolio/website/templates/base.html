@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <script>
+    tailwind.config = {
+      darkMode: 'class' // important!
+    }
+  </script>
+  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Richman Mushanga's Portfolio{% endblock %}</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script> <!-- simpler Tailwind CDN usage -->
+    <script src="{% static 'website/js/main.js' %}" defer></script>
+<script>
+        tailwind.config = {
+            darkMode: 'class' // Enable dark mode using the 'dark' class
+        }
+    </script>
+    <!-- Inline CSS for enhanced dark mode styles -->
+    <style>
+        /* Ensure messages look good in dark mode */
+        .dark .message-success {
+            background-color:rgb(23, 39, 31); /* Darker green for success in dark mode */
+            border-color: #2f855a; /* Brighter green border */
+            color: #d4edda; /* Light text for contrast */
+        }
+        .dark .message-error {
+            background-color: #4b1c1c; /* Darker red for error in dark mode */
+            border-color: #c53030; /* Brighter red border */
+            color: #f8d7da; /* Light text for contrast */
+        }
+        /* Smooth icon transition */
+        #theme-toggle i {
+            transition: transform 0.3s ease;
+        }
+        #theme-toggle:hover i {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white font-sans transition-colors duration-300" id="theme-body">
+    <!-- Navbar -->
+    <nav class="bg-green-800 text-white p-4 sticky top-0 z-10">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="/" class="text-2xl font-bold">Richman Mushanga</a>
+            <div class="flex items-center space-x-4">
+                <a href="#about" class="hover:text-green-200">About</a>
+                <a href="#projects" class="hover:text-green-200">Projects</a>
+                <a href="#skills" class="hover:text-green-200">Skills</a>
+                <a href="#contact" class="hover:text-green-200">Contact</a>
+                <button id="theme-toggle" class="text-xl focus:outline-none">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Messages -->
+    {% if messages %}
+        <div class="container mx-auto px-4 py-4">
+            {% for message in messages %}
+                <div class="border-l-4 p-4 mb-4 animate__animated animate__fadeIn
+                            {% if message.tags == 'success' %}bg-green-100 border-green-500 message-success{% else %}bg-red-100 border-red-500 message-error{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Content -->
+    {% block content %}
+    {% endblock %}
+
+    <!-- Inline JavaScript for dark mode -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('theme-toggle');
+            const htmlElement = document.documentElement; // Target <html> for dark mode
+            const themeIcon = themeToggle.querySelector('i');
+
+            // Check for saved theme or system preference
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                htmlElement.classList.add('dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                htmlElement.classList.remove('dark');
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+            }
+
+            // Toggle theme on button click
+            themeToggle.addEventListener('click', () => {
+                htmlElement.classList.toggle('dark');
+                if (htmlElement.classList.contains('dark')) {
+                    themeIcon.classList.replace('fa-moon', 'fa-sun');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    themeIcon.classList.replace('fa-sun', 'fa-moon');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        });
+    </script>
+
+    <!-- Footer -->
+    <footer class="bg-green-800 text-white p-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p>© 2025 Richman Mushanga. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Welcome to Richman Mushanga's Portfolio{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-gradient-to-r from-green-600 to-green-800 text-white py-32">
+    <div class="container mx-auto text-center px-4">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6 animate__fadeIn">Welcome to My Portfolio</h1>
+        <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto animate__fadeIn animate__delay-1s">
+            I'm Richman Mushanga, a passionate developer creating innovative web solutions.
+        </p>
+        <div class="animate__fadeIn animate__delay-2s">
+            <a href="#contact" class="inline-block bg-white text-green-800 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                Get in Touch <i class="fas fa-arrow-down ml-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- About, Projects, Skills, Contact Sections -->
+{% include 'website/partials/about.html' %}
+{% include 'website/partials/projects.html' %}
+{% include 'website/partials/skills.html' %}
+{% include 'website/partials/contact.html' %}
+{% endblock %}

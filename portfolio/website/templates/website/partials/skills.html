@@ -1,0 +1,83 @@
+<section id="skills" class="py-20 bg-white dark:bg-gray-800 dark:text-white">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 animate__animated animate__fadeIn">
+            Skills & Expertise
+        </h2>
+
+        <div class="max-w-4xl mx-auto">
+            {% regroup skills by category as skills_by_category %}
+            {% for category in skills_by_category %}
+                <h3 class="text-2xl font-semibold mt-8 mb-4 border-b border-gray-300 dark:border-gray-600 pb-2">
+                    {{ category.grouper }}
+                </h3>
+                {% for skill in category.list %}
+                    <div class="mb-6 animate__animated animate__fadeIn animate__delay-{{ forloop.counter|divisibleby:2|yesno:"1s,2s" }}">
+                        <div class="flex justify-between mb-1">
+                            <span class="text-lg font-medium text-gray-700 dark:text-white flex items-center">
+                                {% if skill.icon %}
+                                    <i class="{{ skill.icon }} mr-2"></i>
+                                {% endif %}
+                                {{ skill.name }}
+                            </span>
+                            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                                {{ skill.proficiency }}%
+                            </span>
+                        </div>
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                            <div class="bg-gradient-to-r from-green-600 to-green-800 h-2.5 rounded-full skill-bar"
+                                style="width: 0%"
+                                data-width="{{ skill.proficiency }}%">
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% empty %}
+                <p class="text-center text-gray-600 dark:text-gray-400">No skills available.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<style>
+@keyframes skillBarFill {
+    from { width: 0%; }
+    to { width: var(--target-width); }
+}
+
+.skill-bar {
+    animation: skillBarFill 1.5s forwards;
+    animation-play-state: paused;
+}
+
+.skill-bar.animate {
+    animation-play-state: running;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize skill bars with their target widths
+    const skillBars = document.querySelectorAll('.skill-bar');
+    skillBars.forEach(bar => {
+        bar.style.setProperty('--target-width', bar.getAttribute('data-width'));
+    });
+
+    // Animate skill bars when they come into view
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+                observer.unobserve(entry.target); // Stop observing after animation
+            }
+        });
+    }, {
+        threshold: 0.5, // Trigger when 50% of element is visible
+        rootMargin: '0px 0px -100px 0px' // Adjust this to trigger animation earlier/later
+    });
+
+    // Observe all skill bars
+    skillBars.forEach(bar => {
+        observer.observe(bar);
+    });
+});
+</script>
