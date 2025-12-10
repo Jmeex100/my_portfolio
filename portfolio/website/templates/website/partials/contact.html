@@ -39,7 +39,7 @@
                             <a href="https://linkedin.com/in/richman-mushanga-688913309" class="text-2xl hover:text-green-300 transition-colors transform hover:scale-110" target="_blank" aria-label="LinkedIn">
                                 <i class="fab fa-linkedin"></i>
                             </a>
-                            <a href="https://facebook.com/richard" class="text-2xl hover:text-green-300 transition-colors transform hover:scale-110" target="_blank" aria-label="Facebook">
+                            <a href="https://www.facebook.com/" class="text-2xl hover:text-green-300 transition-colors transform hover:scale-110" target="_blank" aria-label="Facebook">
                                 <i class="fab fa-facebook"></i>
                             </a>
                             <a href="https://wa.me/+260973546375" class="text-2xl hover:text-green-300 transition-colors transform hover:scale-110" target="_blank" aria-label="WhatsApp">
@@ -50,7 +50,7 @@
                 </div>
                 <!-- Contact Form -->
                 <div class="md:w-1/2 p-8">
-                    <form method="post" class="space-y-6">
+                    <form method="post" class="space-y-6" id="contactForm" {% if messages %}{% for message in messages %}{% if 'success' in message.tags %}data-clear="true"{% endif %}{% endfor %}{% endif %}>
                         {% csrf_token %}
                         {% for field in form %}
                             <div class="relative">
@@ -68,10 +68,17 @@
                                 {% endif %}
                             </div>
                         {% endfor %}
-                        <button type="submit" 
+                        <button type="submit"
                                 class="w-full bg-gradient-to-r from-green-600 to-green-800 dark:from-green-700 dark:to-green-900 text-white px-6 py-3 rounded-lg font-semibold hover:from-green-700 hover:to-green-900 dark:hover:from-green-800 dark:hover:to-green-950 transition-all duration-300 transform hover:scale-105 animate__animated animate__fadeIn animate__delay-1s">
                             Send Message <i class="fas fa-paper-plane ml-2"></i>
                         </button>
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="mt-4 p-3 bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-200 rounded-lg animate__animated animate__fadeIn">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
                     </form>
                 </div>
             </div>
@@ -112,3 +119,14 @@
         border-color: #f87171; /* red-400 */
     }
 </style>
+
+<script>
+    // If there are success messages, clear the form
+    {% if messages %}
+        {% for message in messages %}
+            {% if 'success' in message.tags %}
+                document.getElementById('contactForm').reset();
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</script>
