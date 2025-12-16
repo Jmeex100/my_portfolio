@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Project, Skill, ContactMessage, CV
+from .models import Project, Skill, ContactMessage
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
@@ -17,6 +17,11 @@ class ContactMessageAdmin(admin.ModelAdmin):
     list_filter = ['is_read']
     search_fields = ['name', 'email', 'message']
 
-@admin.register(CV)
-class CVAdmin(admin.ModelAdmin):
-    list_display = ['file', 'uploaded_at']
+from django.contrib import admin
+from .models import Document
+
+@admin.register(Document)
+class DocumentAdmin(admin.ModelAdmin):
+    list_display = ('title', 'doc_type', 'uploaded_at', 'is_public')
+    list_filter = ('doc_type', 'is_public')
+    search_fields = ('title',)

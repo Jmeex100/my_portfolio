@@ -1,88 +1,111 @@
 {% load static %}
+
 <section id="about" class="py-16 bg-white dark:bg-gray-900">
     <div class="container mx-auto px-4 max-w-6xl">
-        <h2 class="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-white">About Me</h2>
-        
-        <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
-            <!-- Profile Image -->
+        <h2 class="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-white">
+            About Me
+        </h2>
+
+        <div class="flex flex-col md:flex-row items-center gap-10">
+
+            <!-- PROFILE IMAGE -->
             <div class="md:w-1/3 flex justify-center">
-                <div class="relative w-64 h-64 md:w-72 md:h-72">
+                <div class="relative w-64 h-64">
                     <div class="absolute inset-0 bg-gradient-to-br from-green-400 to-green-600 rounded-full blur-md opacity-20"></div>
-                    <img src="{% static 'images/profile.jpg' %}" 
-                         alt="Richman Mushanga" 
+                    <img src="{% static 'images/profile.jpg' %}"
+                         alt="Richman Mushanga"
                          class="relative w-full h-full rounded-full object-cover border-4 border-white dark:border-gray-800 shadow-2xl">
                 </div>
             </div>
 
-            <!-- Bio -->
-            <div class="md:w-2/3 mt-8 md:mt-0">
-                <h3 class="text-2xl font-semibold text-gray-800 dark:text-white mb-4">Richman Mushanga</h3>
+            <!-- BIO + DOCUMENTS -->
+            <div class="md:w-2/3">
+
+                <h3 class="text-2xl font-semibold text-gray-800 dark:text-white mb-4">
+                    Richman Mushanga
+                </h3>
+
                 <p class="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
-                    Computer Studies student at Evelyn Hone College with expertise in building responsive web applications using:
+                    Computer Studies student at Evelyn Hone College with experience in building
+                    modern, scalable web applications.
                 </p>
-                
+
+                <!-- SKILLS TAGS -->
                 <div class="flex flex-wrap gap-2 mb-6">
-                    <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm font-medium">Python</span>
-                    <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm font-medium">Django</span>
-                    <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm font-medium">Tailwind CSS</span>
-                    <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm font-medium">JavaScript</span>
+                    <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm">Python</span>
+                    <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm">Django</span>
+                    <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm">Tailwind CSS</span>
+                    <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm">JavaScript</span>
                 </div>
 
-                <p class="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-                    Passionate about creating efficient, user-centric solutions with clean code and modern design principles.
-                </p>
+                <!-- ================= DOCUMENTS SECTION ================= -->
+                <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-3">
+                    Documents
+                </h4>
 
-                <!-- Single CV Button with Options -->
-                <div class="flex flex-wrap gap-4">
-                    {% if latest_cv and latest_cv.file %}
-                        <div class="flex flex-wrap gap-3">
-                            <a href="{% url 'download_cv' %}" 
-                               class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold rounded-lg shadow-lg transform transition hover:scale-105 duration-200">
-                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                </svg>
-                                Download CV (PDF)
-                            </a>
-                            <a href="{{ latest_cv.file.url }}" 
-                               target="_blank"
-                               class="inline-flex items-center px-6 py-3 bg-gray-800 hover:bg-gray-900 text-white font-semibold rounded-lg shadow-lg transform transition hover:scale-105 duration-200">
-                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                </svg>
-                                Open in New Tab
-                            </a>
+                {% if documents %}
+                    <div class="space-y-3">
+
+                        {% for doc in documents %}
+                        <div class="flex items-center justify-between bg-gray-50 dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+
+                            <div>
+                                <p class="font-medium text-gray-800 dark:text-white">
+                                    {{ doc.title }}
+                                </p>
+                                <p class="text-sm text-gray-500">
+                                    {{ doc.get_doc_type_display }}
+                                </p>
+                            </div>
+
+                            <div class="flex gap-3">
+                                <!-- VIEW -->
+                                <a href="{% url 'view_document' doc.id %}"
+                                   target="_blank"
+                                   class="px-4 py-2 text-sm bg-gray-800 hover:bg-gray-900 text-white rounded-lg transition">
+                                    View
+                                </a>
+
+                                <!-- DOWNLOAD -->
+                                <a href="{% url 'download_document' doc.id %}"
+                                   class="px-4 py-2 text-sm bg-green-600 hover:bg-green-700 text-white rounded-lg transition">
+                                    Download
+                                </a>
+                            </div>
                         </div>
-                    {% else %}
-                        <span class="inline-flex items-center px-6 py-3 bg-gray-400 text-gray-600 rounded-lg cursor-not-allowed opacity-60">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                            </svg>
-                            CV Not Available
-                        </span>
-                    {% endif %}
+                        {% endfor %}
+
+                    </div>
+                {% else %}
+                    <p class="text-gray-500 italic">
+                        No documents available at the moment.
+                    </p>
+                {% endif %}
+
+                <!-- LOCATION -->
+                <div class="flex gap-6 mt-8 text-gray-700 dark:text-gray-300">
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/>
+                        </svg>
+                        Lusaka, Zambia
+                    </div>
+
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M21 13.255A23.93 23.93 0 0112 15c-3.183 0-6.22-.62-9-1.745"/>
+                        </svg>
+                        Open to Opportunities
+                    </div>
                 </div>
 
-                <!-- Location & Availability -->
-                <div class="flex flex-wrap gap-6 mt-8 text-gray-700 dark:text-gray-300">
-                    <div class="flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        </svg>
-                        <span>Lusaka, Zambia</span>
-                    </div>
-                    <div class="flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                        </svg>
-                        <span>Open to Opportunities</span>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </section>
+
 <!-- JavaScript -->
 <script>
 function openCVModal() {
